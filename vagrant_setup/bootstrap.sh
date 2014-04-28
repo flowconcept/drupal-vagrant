@@ -10,23 +10,38 @@ if [ ! -e $BOOTSTRAPPED ]; then
 
 	apt-get -y update
 
-	# build toolchain
+  # Upgrade libssl
+  DEBIAN_FRONTEND=noninteractive  apt-get upgrade -y libssl1.0.0
+
+	# Build toolchain
 	apt-get install -y curl build-essential git-core
 
-	# apache
+	# Apache
 	apt-get install -y apache2 apache2-mpm-prefork
 
-	# mysql
+	# MySQL
 	DEBIAN_FRONTEND=noninteractive  apt-get install -y mysql-server mysql-client
 	mysqladmin -u root password flow
 
 	# PHP
 	apt-get install -y php5 php5-dev php-pear
-	pear config-set php_ini /etc/php5/apache2/php.ini
-	pecl config-set php_ini /etc/php5/apache2/php.ini
+
+  # ImageMagick
+  apt-get install -y imagemagick
+
+	# PHP extensions
+	apt-get install -y php5-curl php5-gd php5-imagick php5-mcrypt php5-mysql php5-xdebug
+
+	pecl install uploadprogress
+  echo `find /usr/lib/php5/ | grep uploadprogress.so | awk '{print "\nextension=" $1}'` > /etc/php5/mods-available/uploadprogress.ini
+  # php5enmod uploadprogress # not yet available in Debian 7
+  ln -s /etc/php5/mods-available/uploadprogress.ini /etc/php5/conf.d/20-uploadprogress.ini
 
 	# Drush
 	apt-get install -y drush
+
+  # Solr
+  #apt-get install -y solr-jetty
 
 	# Ruby
 	apt-get install -y ruby ruby-dev
@@ -58,12 +73,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
 	a2enmod rewrite
 	a2enmod ssl
 
-	# Install/enable php extensions
-	apt-get install -y php5-curl php5-gd php5-mcrypt php5-mysql php5-xdebug
-	pecl install uploadprogress
-
-	#echo `find /usr/lib/php5/ | grep xdebug.so | awk '{print "\nzend_extension = " $1 "\n"}'` >> /etc/php5/conf.d/20-xdebug.ini
-	#echo `find /usr/lib/php5/ | grep uploadprogress.so | awk '{print "\nextension = " $1}'` >> /etc/php5/apache2/php.ini
+#  echo `find /usr/lib/php5/ | grep xdebug.so | awk '{print "\nzend_extension=" $1 "\n"}'` >> /etc/php5/mods-available/xdebug.ini
 
 	a2dissite default
 	a2ensite vagrant

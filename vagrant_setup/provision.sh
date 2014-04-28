@@ -2,15 +2,12 @@
 
 SITE="$1"
 
-# Gems (installed here to make use of gem cache)
+# Ruby gems (installed here to make use of vagrant-cachier)
 gem install compass oily_png --conservative --no-rdoc --no-ri
 
 # Sync configuration files
 rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant_setup/root/ /
 chown -R vagrant /home/vagrant
-
-# Use the gateway (host) as xdebug host
-route -n | grep 'UG    0' | awk '{print "\nxdebug.remote_host = " $2}' >> /etc/php5/conf.d/20-xdebug.ini
 
 # Tell drupal which site to use
 if [ -n $SITE ]; then

@@ -5,41 +5,49 @@ require "./vagrant_setup/vagrant_addons/multisite/site_picker.rb"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box     = 'opscode-debian-7.4'
-  config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
+  config.vm.box      = "opscode-debian-7.4"
+  config.vm.box_url  = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
+  config.vm.hostname = 'flow-vm'
 
-  config.vm.hostname = 'flow'
+  # Networks
+  config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+  config.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
 
-  # Allow apache to write into /vagrant
-  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
-  
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  # Provider configuration
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "flow"
+    vb.memory = 1024
+    vb.cpus = 2
+    #vb.customize ["modifyvm", :id, "--option", "value"]
   end
 
-  # HTTP
-  config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
-  config.vm.network :forwarded_port, guest: 443, host: 8443, auto_correct: true
+  # Synced folders
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
   
+  # Sync VirtualBox guest additions
   if Vagrant.has_plugin?("vagrant-vbguest")
     config.vbguest.auto_update = false
     config.vbguest.no_remote = true
   end
 
+  # Setup cache buckets
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
     config.cache.auto_detect = true
   end
 
-  config.vm.provision :shell, :path => "vagrant_setup/bootstrap.sh"
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
+  # Bootstrap box
+  config.vm.provision "shell", path: "vagrant_setup/bootstrap.sh"
  
+  # Redetect cache buckets for e.g. ruby gems
   if Vagrant.has_plugin?("vagrant-cachier")
-    # Reconfigure cache buckets now that ruby has been installed
     config.cache.auto_detect = true
   end
 
-  config.vm.provision :shell do |shell|
+  config.vm.provision "shell" do |shell|
     shell.path = "vagrant_setup/provision.sh"
-    shell.args = site_picker('drush_config')
+    shell.args = site_picker("drush_config")
    end
 end
