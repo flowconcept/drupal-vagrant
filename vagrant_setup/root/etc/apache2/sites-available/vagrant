@@ -9,3 +9,20 @@
       Allow from all
   </Directory>
 </VirtualHost>
+
+<VirtualHost *:443>
+  DocumentRoot /var/www/htdocs
+  DirectoryIndex index.php
+
+  SSLEngine on
+  SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+  CustomLog /var/log/apache2/vagrant.log combined env=!gif-image
+  Options FollowSymLinks MultiViews
+  <Directory /var/www/htdocs>
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+  </Directory>
+</VirtualHost>
