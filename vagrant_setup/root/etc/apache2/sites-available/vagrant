@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+  DocumentRoot /var/www/htdocs
+  DirectoryIndex index.php
+  CustomLog /var/log/apache2/vagrant.log combined env=!gif-image
+  Options FollowSymLinks MultiViews
+  <Directory /var/www/htdocs>
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+  </Directory>
+</VirtualHost>

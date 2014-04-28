@@ -1,0 +1,8 @@
+name = Drush Compass
+
+; Information added by drupal.org packaging script on 2012-04-20
+version = "7.x-1.2+6-dev"
+core = "7.x"
+project = "drush_compass"
+datestamp = "1334924061"
+
