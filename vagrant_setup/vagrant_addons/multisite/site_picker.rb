@@ -17,36 +17,29 @@ def site_picker(drush_config_directory)
   elsif sites.length > 1
     # If this repository contains multiple sites check the command line
 
-    site_arg = ARGV.select{|arg| arg.match(/^\-\-site=.+/)}
+    puts "Multiple drush configs detected."
+    puts "Please specify the config to be used."
+    puts "Available sites are: "
+
+    i = 0
+    sites.each do |site|
+      i=i+1
+      puts "  #{i} #{site}"
+    end
+    puts "Enter site id:"
+    input = $stdin.gets
 
     site = ""
-    if site_arg.length > 0 && matches = site_arg[0].match(/^\-\-site=(\S+)\s*$/)
+    if input.length > 0
       # Check for the name
-      if sites.include?(matches[1])
-        site = matches[1]
-      elsif sites[Integer(matches[1]) - 1]
-        site = sites[Integer(matches[1]) - 1]
+      if sites.include?(input)
+        site = input
+      elsif sites[Integer(input) - 1]
+        site = sites[Integer(input) - 1]
       end
 
       # Remove site argument from vagrant argument list
-      ARGV.delete_at(ARGV.find_index(site_arg[0]))
-    end
-
-    if site == ""
-      puts "Multiple drush configs detected."
-      puts "Please specify the config to be used."
-      puts "Available sites are: "
-
-      i = 0
-      sites.each do |site|
-          i=i+1
-          puts "  #{i} #{site}"
-      end
-
-      puts "Usage: vagrant up --site=1"
-      puts "Usage: vagrant up --site=\"#{sites[0]}\""
-
-      exit 1
+      #ARGV.delete_at(ARGV.find_index(input))
     end
   end
 
