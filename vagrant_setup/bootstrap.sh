@@ -70,10 +70,11 @@ if [ ! -e $BOOTSTRAPPED ]; then
 	chown -R vagrant /var/lock/apache2
 
   # Enable apache modules
+  a2enmod expires
 	a2enmod rewrite
 	a2enmod ssl
 
-#  echo `find /usr/lib/php5/ | grep xdebug.so | awk '{print "\nzend_extension=" $1 "\n"}'` >> /etc/php5/mods-available/xdebug.ini
+  # echo `find /usr/lib/php5/ | grep xdebug.so | awk '{print "\nzend_extension=" $1 "\n"}'` >> /etc/php5/mods-available/xdebug.ini
 
 	a2dissite default
 	a2ensite vagrant
@@ -84,7 +85,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
 	# Create empty database
 	mysql -uroot -pflow -e "DROP DATABASE IF EXISTS drupal;"
 	mysql -uroot -pflow -e "CREATE DATABASE drupal;"
-	mysql -uroot -pflow -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'grant'"
+	mysql -uroot -pflow -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'v4gr4nt'"
 
 	echo "Done boostrapping vm"
 	touch $BOOTSTRAPPED

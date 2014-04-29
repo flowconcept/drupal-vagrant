@@ -13,8 +13,8 @@ $aliases['dev'] = array(
           'default' =>
             array(
               'database' => 'drupal',
-              'username' => 'flowconcept',
-              'password' => 'flow',
+              'username' => 'vagrant',
+              'password' => 'v4gr4nt',
               'host'     => 'localhost',
               'port'     => '',
               'driver'   => 'mysql',

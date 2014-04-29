@@ -9,8 +9,8 @@
  */
 $databases['default']['default']['host'] = 'localhost';
 $databases['default']['default']['database'] = 'drupal';
-$databases['default']['default']['username'] = 'flowconcept';
-$databases['default']['default']['password'] = 'flow';
+$databases['default']['default']['username'] = 'vagrant';
+$databases['default']['default']['password'] = 'v4gr4nt';
 
 /**
  * Allow access to update.php script.
