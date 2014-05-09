@@ -15,27 +15,27 @@ Vagrant.configure("2") do |config|
 
   # Provider configuration
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "flow"
     vb.memory = 1024
     vb.cpus = 2
     #vb.customize ["modifyvm", :id, "--option", "value"]
   end
 
   # Synced folders
+  #config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
   config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
   
-  # Sync VirtualBox guest additions
-  if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vbguest.auto_update = false
-    config.vbguest.no_remote = true
-  end
-
   # Setup cache buckets
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
     config.cache.auto_detect = true
   end
 
+  # Sync VirtualBox guest additions
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.no_remote = true
+  end
+
+  # Fix running as tty
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # Bootstrap box
