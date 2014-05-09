@@ -2,7 +2,7 @@
 def site_picker(drush_config_directory)
 
   # This script can only be used with `vagrant up`
-  if ARGV.find_index("up") == nil
+  if !(ARGV.include?("up") || ARGV.include?("provision"))
     return ""
   end
 
