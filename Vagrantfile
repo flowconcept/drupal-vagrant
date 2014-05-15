@@ -1,5 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+
+# Add hacky installer fixing mount problem
+require "./vagrant_setup/vagrant_addons/hackyinstaller.rb"
  
 require "./vagrant_setup/vagrant_addons/multisite/site_picker.rb"
 
@@ -8,6 +11,7 @@ Vagrant.configure("2") do |config|
   config.vm.box      = "opscode-debian-7.4"
   config.vm.box_url  = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
   config.vm.hostname = 'flow-vm'
+
 
   # Networks
   config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
@@ -21,8 +25,8 @@ Vagrant.configure("2") do |config|
   end
 
   # Synced folders
-  #config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
-  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
+  config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
+  #config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
   
   # Setup cache buckets
   if Vagrant.has_plugin?("vagrant-cachier")
@@ -33,6 +37,8 @@ Vagrant.configure("2") do |config|
   # Sync VirtualBox guest additions
   if Vagrant.has_plugin?("vagrant-vbguest")
     config.vbguest.no_remote = true
+    # Add hacky installer fixing mount problem
+    config.vbguest.installer = HackyGuestAdditionsInstaller
   end
 
   # Fix running as tty
