@@ -12,21 +12,21 @@ Vagrant.configure("2") do |config|
   config.vm.box_url  = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
   config.vm.hostname = 'flow-vm'
 
-
   # Networks
   config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
   config.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
+  config.vm.network "private_network", ip: "192.168.42.10"
 
   # Provider configuration
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 1024
     vb.cpus = 2
-    #vb.customize ["modifyvm", :id, "--option", "value"]
   end
 
   # Synced folders
-  config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
   #config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
+  config.vm.synced_folder ".", "/vagrant", nfs: true
+  #config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
   
   # Setup cache buckets
   if Vagrant.has_plugin?("vagrant-cachier")
