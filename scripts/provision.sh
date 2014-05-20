@@ -2,11 +2,8 @@
 
 SITE="$1"
 
-# Ruby gems (installed here to make use of vagrant-cachier)
-gem install compass oily_png --conservative --no-rdoc --no-ri
-
 # Sync configuration files
-rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant_setup/root/ /
+rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
 chown -R vagrant /home/vagrant
 
 # Tell drupal which site to use
