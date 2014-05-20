@@ -45,7 +45,7 @@ $conf['file_temporary_path'] = '/tmp';
 $conf['stage_file_proxy_origin'] = call_user_func(function() {
   $aliases = array();
   // Include drush configs
-  $drush_config = '/vagrant/vagrant_setup/root/home/vagrant/.drush/vagrant.aliases.drushrc.php';
+  $drush_config = '/vagrant/vagrant/config/root/home/vagrant/.drush/vagrant.aliases.drushrc.php';
   if (!file_exists($drush_config)) {
   	return FALSE;
   }
