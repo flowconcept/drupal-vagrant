@@ -28,8 +28,8 @@ Vagrant.configure("2") do |config|
 
   # Synced folders (choose one method)
   #config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
-  #config.vm.synced_folder ".", "/vagrant", nfs: true
-  config.vm.synced_folder ".", "/vagrant", :owner => "www-data", :group => "vagrant", :mount_options => ["dmode=775","fmode=775"]
+  config.vm.synced_folder ".", "/vagrant", nfs: true
+  #config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data", :mount_options => ["dmode=775","fmode=775"]
   
   # Setup cache buckets
   if Vagrant.has_plugin?("vagrant-cachier")
