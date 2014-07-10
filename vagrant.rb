@@ -56,4 +56,11 @@ Vagrant.configure("2") do |config|
     shell.path = File.dirname(__FILE__) + "/scripts/provision.sh"
     shell.args = site_picker("drush_config")
    end
+
+  # Forget provisioned site
+  if Vagrant.has_plugin?("vagrant-triggers")
+    config.trigger.before [:destroy] do
+      site_picker_forget
+    end
+  end
 end
