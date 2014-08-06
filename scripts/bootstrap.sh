@@ -37,7 +37,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   php5enmod uploadprogress
 
   # Drush
-  apt-get install -y drush
+  pear channel-discover pear.drush.org
+  pear install drush/drush-5.10.0.0
 
   # Solr
   #apt-get install -y solr-jetty

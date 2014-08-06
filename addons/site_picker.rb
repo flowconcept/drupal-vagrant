@@ -20,7 +20,7 @@ def site_picker(drush_config_directory = "drush_config")
 
   if sites.length == 1
     # If this repository contains only one site return it
-    return sites[0]
+    return ""
 
   elsif sites.length > 1
     # If this repository contains multiple sites ask which one to use
@@ -54,5 +54,5 @@ end
 
 # Forget previously set site configuration.
 def site_picker_forget
-  File.delete(".site")
+  File.delete(".site") if File.exist?(".site")
 end

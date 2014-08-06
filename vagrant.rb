@@ -5,8 +5,8 @@ require File.dirname(__FILE__) + "/addons/site_picker.rb"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box      = "opscode-debian-7.4"
-  config.vm.box_url  = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
+  config.vm.box      = $config_vm_box || "opscode-debian-7.4"
+  config.vm.box_url  = $config_vm_box_url || "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
   config.vm.hostname = 'flow-vm'
 
   # Networks
