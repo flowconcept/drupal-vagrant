@@ -1,7 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require File.dirname(__FILE__) + "/addons/utils.rb"
 require File.dirname(__FILE__) + "/addons/site_picker.rb"
+
+check_plugins
 
 Vagrant.configure("2") do |config|
 
