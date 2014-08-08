@@ -39,6 +39,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Drush
   pear channel-discover pear.drush.org
   pear install drush/drush-5.10.0.0
+  sudo drush --version
 
   # Solr
   #apt-get install -y solr-jetty
