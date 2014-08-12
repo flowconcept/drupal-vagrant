@@ -37,8 +37,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   php5enmod uploadprogress
 
   # Drush
-  pear channel-discover pear.drush.org
-  pear install drush/drush-5.10.0.0
+  sudo pear channel-discover pear.drush.org
+  sudo pear install drush/drush-5.10.0.0
   sudo drush --version
 
   # Solr
