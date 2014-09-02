@@ -8,7 +8,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Update home directory:
   usermod -d /var/www/ vagrant
 
-  apt-get -y update
+  # Node.js repository (runs apt-get update)
+  curl -sL https://deb.nodesource.com/setup | bash -
 
   # Upgrade libssl
   DEBIAN_FRONTEND=noninteractive  apt-get upgrade -y libssl1.0.0
@@ -44,11 +45,13 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Solr
   #apt-get install -y solr-jetty
 
-  # Ruby
+  # Ruby: compass
   apt-get install -y ruby ruby-dev
-
-  # Ruby gems
   gem install compass oily_png --conservative --no-rdoc --no-ri
+
+  # Node: grunt
+  apt-get install -y nodejs
+  sudo npm install -g grunt-cli
 
   # Vim
   apt-get install -y vim
