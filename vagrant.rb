@@ -67,7 +67,10 @@ Vagrant.configure("2") do |config|
   #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   # Bootstrap box
-  config.vm.provision "shell", path: File.dirname(__FILE__) + "/scripts/bootstrap.sh"
+  config.vm.provision "shell" do |shell|
+    shell.path = File.dirname(__FILE__) + "/scripts/bootstrap.sh"
+    shell.args = [Process.uid, Process.gid]
+   end
 
   # Provision box
   config.vm.provision "shell" do |shell|
