@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/usr/bin/drush -r /var/www/htdocs -l http://localhost -u 1 "$@"
