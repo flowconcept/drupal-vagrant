@@ -16,15 +16,12 @@ if [ -n $SITE ]; then
   fi
 fi
 
-# Drop local database
+
 sudo -u vagrant -H drush --yes @vagrant.dev sql-drop
-# Get current database
-sudo -u vagrant -H drush --yes --no-cache sql-sync @vagrant.staging @vagrant.dev
 
-# Uncomment to use sync instead of stage proxy
+sudo -u vagrant -H drush --yes sql-sync @vagrant.staging @vagrant.dev
+
 sudo -u vagrant -H drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
-
-sudo -u vagrant -H drush @vagrant.dev cc all
 sudo -u vagrant -H drush @vagrant.dev cr
 
 echo "Done provisioning site $SITE"
