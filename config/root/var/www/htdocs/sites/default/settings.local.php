@@ -31,8 +31,8 @@ $conf['cache'] = FALSE;
 $conf['error_level'] =  /*ERROR_REPORTING_DISPLAY_ALL*/ 2;
 
 // Disable aggregation.
-$conf['preprocess_css'] = FALSE;
-$conf['preprocess_js'] = FALSE;
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
 
 // Limit log size.
 $conf['dblog_row_limit'] = 1000;
