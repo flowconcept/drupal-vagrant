@@ -44,7 +44,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
 
   git clone https://github.com/drush-ops/drush.git /usr/local/src/drush
   cd /usr/local/src/drush
-  git checkout 7.0.0-alpha8  #or whatever version you want.+
+  git checkout 7.0.0-alpha6  #or whatever version you want.+
   ln -s /usr/local/src/drush/drush /usr/bin/drush
   composer install
   composer update
