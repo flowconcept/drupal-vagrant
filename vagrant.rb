@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
   # Networks
   config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
   config.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
+  config.vm.network "forwarded_port", guest: 3306, host: 8306, auto_correct: true
 
   # Static network for NFS
   if $config[:synced_folder_type] == "nfs"
