@@ -8,14 +8,17 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Update home directory:
   usermod -d /var/www/ vagrant
 
+  # Update repo list
+  apt-get update
+
+  # Build toolchain
+  apt-get install -y curl build-essential git-core
+
   # Node.js repository (runs apt-get update)
   curl -sL https://deb.nodesource.com/setup | bash -
 
   # Upgrade libssl
   DEBIAN_FRONTEND=noninteractive  apt-get upgrade -y libssl1.0.0
-
-  # Build toolchain
-  apt-get install -y curl build-essential git-core
 
   # Apache
   apt-get install -y apache2 apache2-mpm-prefork
