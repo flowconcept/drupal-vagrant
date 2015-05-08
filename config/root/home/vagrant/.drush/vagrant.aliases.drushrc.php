@@ -5,6 +5,7 @@ $aliases['dev'] = array(
   'path-aliases' =>
     array(
       '%site' => 'sites/default/',
+      '%files' => 'sites/default/files',
     ),
   'databases'    =>
     array(

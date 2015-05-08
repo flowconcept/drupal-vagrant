@@ -11,6 +11,9 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Update repo list
   apt-get update
 
+  # Install keyring
+  apt-get install debian-keyring debian-archive-keyring
+
   # Build toolchain
   apt-get install -y curl build-essential git-core
 
