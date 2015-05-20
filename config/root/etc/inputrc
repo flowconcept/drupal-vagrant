@@ -37,7 +37,7 @@ $if mode=emacs
 # "\e[5~": beginning-of-history
 # "\e[6~": end-of-history
 
-# alternate mappings for "page up" and "page down" to search the history
+# alternate mappings for "cursor up" and "cursor down" to search the history
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
