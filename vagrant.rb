@@ -14,7 +14,7 @@ $config = {
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
-  cache: [:apt, :apt_lists, :composer, :gem]
+  cache: [:apt, :apt_lists, :gem]
 }.merge($config || {})
 
 
@@ -59,7 +59,8 @@ Vagrant.configure("2") do |config|
   # Setup cache buckets (vagrant-cachier)
   config.cache.scope = :box
   config.cache.auto_detect = false
-  $config[:cache].each { |cache| config.cache.enable cache } 
+  $config[:cache].each { |cache| config.cache.enable cache }
+  config.cache.enable :generic, { "compass" => { :cache_dir => "/root/.compass/cache" }}
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true

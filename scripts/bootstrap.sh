@@ -23,8 +23,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   apt-get install -y php5 php5-dev php-pear
 
   # Node.js
-  curl -sL https://deb.nodesource.com/setup_0.10 | bash -
-  apt-get install -y nodejs
+  #curl -sL https://deb.nodesource.com/setup_0.10 | bash -
+  #apt-get install -y nodejs
 
   # Ruby
   #apt-get install -y ruby ruby-dev
@@ -60,14 +60,15 @@ if [ ! -e $BOOTSTRAPPED ]; then
   git clone -b master https://github.com/drush-ops/drush.git /usr/local/src/drush
   cd /usr/local/src/drush
   ln -s /usr/local/src/drush/drush /usr/bin/drush
+  # Patch composer.lock to remove php5-readline which isn't available on wheezy
+  sed -i '/^\s*"ext-readline": "\*",$/d' composer.lock
   composer install
-  drush --version
+
+  # Node packages
+  #sudo npm install -g grunt-cli
 
   # Ruby gems
-  #gem install compass oily_png --conservative --no-rdoc --no-ri
-
-  # Node modules
-  #sudo npm install -g grunt-cli
+  #gem install compass oily_png
 
 
 
@@ -106,8 +107,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   mysql -uroot -pflow -e "CREATE DATABASE drupal;"
   mysql -uroot -pflow -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'v4gr4nt'"
 
-  echo "Done boostrapping vm"
   touch $BOOTSTRAPPED
+  echo "Done boostrapping vm"
 
 else
   echo "VM already boostrapped"
