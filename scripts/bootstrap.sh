@@ -107,6 +107,10 @@ if [ ! -e $BOOTSTRAPPED ]; then
   mysql -uroot -pflow -e "CREATE DATABASE drupal;"
   mysql -uroot -pflow -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'v4gr4nt'"
 
+  # Eye candy
+  echo "alias l='ls --color=auto -lah'" >> /root/.bashrc
+  echo "alias l='ls --color=auto -lah'" >> /vagrant/.bashrc
+
   touch $BOOTSTRAPPED
   echo "Done boostrapping vm"
 
