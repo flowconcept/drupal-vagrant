@@ -14,7 +14,7 @@ $config = {
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
-  cache: [:apt, :apt_lists, :gem]
+  cache: [:apt, :apt_lists, :composer, :gem]
 }.merge($config || {})
 
 
