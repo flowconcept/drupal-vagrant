@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     when "rsync"
       config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
     when "nfs"
-      config.vm.synced_folder ".", "/vagrant", nfs: true
+      config.vm.synced_folder ".", "/vagrant", type: "nfs"
     when "vboxsf"
       config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data", :mount_options => ["dmode=775","fmode=775"]
     else
