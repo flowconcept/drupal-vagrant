@@ -16,12 +16,16 @@ if [ -n $SITE ]; then
   fi
 fi
 
+# Sync staging to development environment if @vagrant site aliases exist.
+# Otherwise install Drupal.
+if [ -n "`drush sa | grep vagrant`" ]
+  then
+    sudo -u vagrant -H drush --yes @vagrant.dev sql-drop
 
-sudo -u vagrant -H drush --yes @vagrant.dev sql-drop
+    sudo -u vagrant -H drush --yes sql-sync @vagrant.staging @vagrant.dev
 
-sudo -u vagrant -H drush --yes sql-sync @vagrant.staging @vagrant.dev
-
-sudo -u vagrant -H drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
-sudo -u vagrant -H drush @vagrant.dev cr
+    sudo -u vagrant -H drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
+    sudo -u vagrant -H drush @vagrant.dev cr
+fi
 
 echo "Done provisioning site $SITE"
