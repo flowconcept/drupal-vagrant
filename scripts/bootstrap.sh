@@ -109,7 +109,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
 
   # Eye candy
   echo "alias l='ls --color=auto -lah'" >> /root/.bashrc
-  echo "alias l='ls --color=auto -lah'" >> /vagrant/.bashrc
+  echo "alias l='ls --color=auto -lah'" >> /home/vagrant/.bashrc
 
   touch $BOOTSTRAPPED
   echo "Done boostrapping vm"
