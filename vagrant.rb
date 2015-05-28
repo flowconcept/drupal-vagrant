@@ -49,15 +49,19 @@ Vagrant.configure("2") do |config|
     when "rsync"
       config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
     when "nfs"
-      config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
-    when "vboxsf"
-      config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data", :mount_options => ["dmode=775","fmode=775"]
+      config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false, mount_options: ["nolock,vers=3,tcp,noatime,actimeo=1"]
+    when "default"
+      config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data", mount_options: ["dmode=775","fmode=775"]
     else
       raise "Unknown $config_vm_synced_folder_type #{$config[:synced_folder_type]}"
   end
   
   # Setup cache buckets (vagrant-cachier)
   config.cache.scope = :box
+  config.cache.synced_folder_opts = {
+    type: :nfs,
+    mount_options: ["nolock,vers=3,tcp,noatime,actimeo=1"]
+  }
   config.cache.auto_detect = false
   $config[:cache].each { |cache| config.cache.enable cache }
   config.cache.enable :generic, { "composer" => { :cache_dir => "/root/.composer/cache" }}
