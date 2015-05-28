@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
   config.cache.scope = :box
   config.cache.auto_detect = false
   $config[:cache].each { |cache| config.cache.enable cache }
-  config.cache.enable :generic, { "compass" => { :cache_dir => "/root/.compass/cache" }}
+  config.cache.enable :generic, { "composer" => { :cache_dir => "/root/.composer/cache" }}
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
