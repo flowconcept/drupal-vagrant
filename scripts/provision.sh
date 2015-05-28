@@ -28,8 +28,9 @@ if [ -n "`drush sa | grep vagrant`" ]
     echo "Drupal not installed yet or vagrant.aliases.drushrc.php is missing."
     echo ""
     echo "To install Drupal now:"
-    echo "vagrant ssh -c \"sudo su\""
-    echo "cd /var/www/htdocs && drush site-install --db-url=mysql://vagrant:v4gr4nt@localhost/drupal --account-name=flowconcept --account-mail=info@flowconcept.de --account-pass=flow --site-name=flow --site-mail=info@flowconcept.de standard"
+    echo "vagrant ssh"
+    echo "cd /var/www/htdocs"
+    echo "drush site-install --db-url=mysql://vagrant:v4gr4nt@localhost/drupal --account-name=flowconcept --account-mail=info@flowconcept.de --account-pass=flow --site-name=flow --site-mail=info@flowconcept.de standard"
     echo ""
 fi
 
