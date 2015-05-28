@@ -52,10 +52,11 @@ call_user_func(function () use (&$aliases) {
 // No staging configuration found in sites-local.php
 if (empty($aliases['staging'])) {
   // Require staging configuration
-  $handle = opendir('/var/www/drush_config');
-  while (FALSE !== ($file = readdir($handle))) {
-    if (pathinfo($file, PATHINFO_EXTENSION) == 'php') {
-      require('/var/www/drush_config/' . $file);
+  if ($handle = opendir('/var/www/drush_config')) {
+    while (FALSE !== ($file = readdir($handle))) {
+      if (pathinfo($file, PATHINFO_EXTENSION) == 'php') {
+        require('/var/www/drush_config/' . $file);
+      }
     }
   }
 }
