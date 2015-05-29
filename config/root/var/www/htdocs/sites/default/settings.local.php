@@ -60,6 +60,7 @@ $settings['update_free_access'] = TRUE;
 
 /**
  * Show all error messages, with backtrace information.
+ * Possible values: hide, some, all, verbose.
  */
 $config['system.logging']['error_level'] = 'verbose';
 
