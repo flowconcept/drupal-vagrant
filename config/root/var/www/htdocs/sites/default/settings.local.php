@@ -5,43 +5,91 @@
  */
 
 /**
- * Custom database settings.
+ * Database settings.
  */
-$databases['default']['default']['host'] = 'localhost';
-$databases['default']['default']['database'] = 'drupal';
-$databases['default']['default']['username'] = 'vagrant';
-$databases['default']['default']['password'] = 'v4gr4nt';
+$databases['default']['default'] = array (
+  'database' => 'drupal',
+  'username' => 'vagrant',
+  'password' => 'v4gr4nt',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+
+/**
+ * configuration
+ */
+#$config_directories['active'] = '';
+#$config_directories['staging'] = '';
+
+/**
+ * Enable local development services.
+ */
+#$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+
+/**
+ * Allow test modules and themes to be installed.
+ *
+ * Drupal ignores test modules and themes by default for performance reasons.
+ * During development it can be useful to install test extensions for debugging
+ * purposes.
+ */
+$settings['extension_discovery_scan_tests'] = TRUE;
+
+/**
+ * Enable access to rebuild.php.
+ *
+ * This setting can be enabled to allow Drupal's php and database cached
+ * storage to be cleared via the rebuild.php page. Access to this page can also
+ * be gained by generating a query string from rebuild_token_calculator.sh and
+ * using these parameters in a request to rebuild.php.
+ */
+$settings['rebuild_access'] = TRUE;
 
 /**
  * Allow access to update.php script.
  */
-$update_free_access = TRUE;
+$settings['update_free_access'] = TRUE;
 
 /**
- * Variable overrides.
+ * Override configuration values.
+ * ´drush --include-overridden cget´
  */
 
-// Disable feature revert of boxes content.
-$conf['boxes_ignore_changes'] = FALSE;
+/**
+ * Show all error messages, with backtrace information.
+ */
+$config['system.logging']['error_level'] = 'verbose';
 
-// Disable caching.
-$conf['cache'] = FALSE;
-
-// Display PHP notices.
-$conf['error_level'] =  /*ERROR_REPORTING_DISPLAY_ALL*/ 2;
-
-// Disable aggregation.
+/**
+ * Disable CSS and JS aggregation.
+ */
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;
 
+/**
+ * Disable the render cache.
+ *
+ * This setting disables the render cache by using the Null cache back-end
+ * defined by the development.services.yml file above.
+ *
+ * Do not use this setting until after the site is installed.
+ */
+#$settings['cache']['bins']['render'] = 'cache.backend.null';
+
 // Limit log size.
-$conf['dblog_row_limit'] = 1000;
+$config['dblog.settings']['row_limit'] = 1000;
 
 // Adjust local file system paths.
-$conf['file_private_path'] = '/var/www/private';
-$conf['file_temporary_path'] = '/tmp';
+$settings['file_private_path'] = '/var/www/private';
+$config['system.file']['path']['temporary'] = '/tmp';
 
-// Configure Stage File Proxy origin.
+/**
+ * Configure Stage File Proxy origin.
+ */
+/*
 $conf['stage_file_proxy_origin'] = call_user_func(function() {
   $aliases = array();
   // Include drush configs
@@ -56,3 +104,4 @@ $conf['stage_file_proxy_origin'] = call_user_func(function() {
   $url = array_merge(array('user' => 'flow', 'pass' => 'flowies'), parse_url($aliases['staging']['uri']));
   return $url['scheme'] . '://' . $url['user'] . ':' . $url['pass'] . '@' . $url['host'];
 });
+// */
