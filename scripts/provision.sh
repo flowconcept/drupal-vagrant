@@ -6,6 +6,9 @@ SITE="$1"
 rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
 chown -R vagrant /home/vagrant
 
+# Run composer install
+sudo -u vagrant -H composer install -d /vagrant -n
+
 # Tell drupal which site to use
 if [ -n "$SITE" ]; then
   echo "<?php
