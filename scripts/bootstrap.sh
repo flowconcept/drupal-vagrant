@@ -35,15 +35,12 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Vim
   apt-get install -y vim
 
-
-
-  # Sync configuration files (again during provisioning)
+  # Sync configuration files (again during provosioning)
   rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
   chown -R vagrant /home/vagrant
 
 
-
-  # PHP extensions
+  ### PHP extensions
   apt-get install -y php5-curl php5-gd imagemagick php5-imagick php5-mcrypt php5-mysql php5-xdebug
 
   pecl install uploadprogress
@@ -55,7 +52,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
   mv composer.phar /usr/local/bin/composer
   ln -s /usr/local/bin/composer /usr/bin/composer
 
-  # Drush 8
+  ### Drush 8
   #composer global require drush/drush:dev-master
   git clone -b master https://github.com/drush-ops/drush.git /usr/local/src/drush
   cd /usr/local/src/drush
@@ -70,8 +67,6 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Ruby gems
   #gem install compass oily_png
 
-
-
   # Link /var/www
   rm -rf /var/www/
   ln -s /vagrant /var/www
@@ -81,12 +76,8 @@ if [ ! -e $BOOTSTRAPPED ]; then
   # Set new home directory
   usermod -d /var/www/ vagrant
 
-  # SSH config
-  sudo -u vagrant -H cp /vagrant/vagrant/config/ssh/* /home/vagrant/.ssh/
-  sudo -u vagrant -H chmod 740 /home/vagrant
-  sudo -u vagrant -H chmod 740 /home/vagrant/.ssh
-  sudo -u vagrant -H chmod 600 /home/vagrant/.ssh/id_rsa
-  sudo -u vagrant -H chmod 740 /home/vagrant/.ssh/authorized_keys
+  # Fix ssh agent forwarding when using sudo
+  echo "Defaults    env_keep += \"SSH_AUTH_SOCK\"" > /etc/sudoers.d/99_root_ssh_agent
 
   # Fix apache lock dir
   chown -R vagrant /var/lock/apache2
