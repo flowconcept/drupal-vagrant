@@ -43,6 +43,7 @@ if [ ! -e $BOOTSTRAPPED ]; then
   ### PHP extensions
   apt-get install -y php5-curl php5-gd imagemagick php5-imagick php5-mcrypt php5-mysql php5-xdebug
 
+
   pecl install uploadprogress
   echo `find /usr/lib/php5/ | grep uploadprogress.so | awk '{print "\nextension=" $1}'` > /etc/php5/mods-available/uploadprogress.ini
   php5enmod uploadprogress
@@ -87,11 +88,11 @@ if [ ! -e $BOOTSTRAPPED ]; then
   a2enmod rewrite
   a2enmod ssl
 
-  a2dissite default
+  a2dissite 000-default
   a2ensite vagrant
 
   # Restart apache
-  /etc/init.d/apache2 restart
+  service apache2 restart
 
   # Create empty database
   mysql -uroot -pflow -e "DROP DATABASE IF EXISTS drupal;"
