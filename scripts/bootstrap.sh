@@ -95,9 +95,9 @@ if [ ! -e $BOOTSTRAPPED ]; then
   service apache2 restart
 
   # Create empty database
-  mysql -uroot -pflow -e "DROP DATABASE IF EXISTS drupal;"
-  mysql -uroot -pflow -e "CREATE DATABASE drupal;"
-  mysql -uroot -pflow -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'v4gr4nt'"
+  mysql -e "DROP DATABASE IF EXISTS drupal;"
+  mysql -e "CREATE DATABASE drupal;"
+  mysql -e "GRANT ALL ON drupal.* TO vagrant@localhost IDENTIFIED BY 'v4gr4nt'"
 
   # Eye candy
   echo "alias l='ls --color=auto -lah'" >> /root/.bashrc

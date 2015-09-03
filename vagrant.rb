@@ -75,11 +75,22 @@ Vagrant.configure("2") do |config|
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
 
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "vagrant/chef/cookbooks"
+#   chef.roles_path     = "../../chef/roles"
+#   chef.add_role "db"
+    chef.add_recipe "debian::default"
+    chef.add_recipe "debian::mysql"
+    chef.add_recipe "debian::localdev"
+    chef.json = {}
+  end
+
   # Bootstrap box
-  config.vm.provision "shell" do |shell|
-    shell.path = File.dirname(__FILE__) + "/scripts/bootstrap.sh"
-    shell.args = [Process.uid, Process.gid]
-   end
+#  config.vm.provision "shell" do |shell|
+#    shell.path = File.dirname(__FILE__) + "/scripts/bootstrap.sh"
+#    shell.args = [Process.uid, Process.gid]
+#   end
 
   # Provision box
   config.vm.provision "shell" do |shell|
