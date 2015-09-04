@@ -6,8 +6,20 @@ SITE="$1"
 rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
 chown -R vagrant /home/vagrant
 
+# Prepare public files directory
+if [ ! -d /public ]; then
+  mkdir /public
+  chown -R www-data:www-data /public
+fi
+
 # Run composer install
 sudo -u vagrant -H composer install -d /vagrant -n
+
+# build css
+cd /vagrant
+sudo -u vagrant -H npm install
+sudo -u vagrant -H bower install
+sudo -u vagrant -H gulp build
 
 # Tell drupal which site to use
 if [ -n "$SITE" ]; then
@@ -23,9 +35,15 @@ fi
 # Otherwise install Drupal.
 if [ -n "`sudo -u vagrant -H drush sa | grep vagrant`" ]
   then
+    PUBLIC=`sudo -u vagrant -H drush dd @vagrant.dev:%files`
+    if [ ! -e "$PUBLIC" ]; then
+      ln -s /public ${PUBLIC}
+    fi
     sudo -u vagrant -H drush --yes @vagrant.dev sql-drop
     sudo -u vagrant -H drush --yes sql-sync @vagrant.staging @vagrant.dev
+    chown -R vagrant /public
     sudo -u vagrant -H drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
+    chown -R www-data:www-data /public
     sudo -u vagrant -H drush @vagrant.dev cr
   else
     echo "Drupal not installed yet or vagrant.aliases.drushrc.php is missing."
