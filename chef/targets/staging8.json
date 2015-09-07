@@ -1,0 +1,17 @@
+{
+  "name": "staging2",
+  "chef_environment": "_default",
+  "automatic": {
+  },
+  "normal": {
+  },
+  "chef_type": "node",
+  "default": {
+  },
+  "override": {
+  },
+  "run_list": [
+    "recipe[debian::default]",
+    "recipe[debian::mysql]"
+  ]
+}
