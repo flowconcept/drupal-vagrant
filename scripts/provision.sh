@@ -15,10 +15,13 @@ fi
 # Run composer install
 sudo -u vagrant -H composer install -d /vagrant -n
 
-# build css
 cd /vagrant
+# Install packages, rebuild npm packages to avoid problems with already
 sudo -u vagrant -H npm install
+sudo -u vagrant -H npm rebuild
 sudo -u vagrant -H bower install
+
+# Build css
 sudo -u vagrant -H gulp build
 
 # Tell drupal which site to use
