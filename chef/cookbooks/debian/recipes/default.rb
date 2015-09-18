@@ -183,6 +183,7 @@ if !File.exists?('/root/.default_recipe_installed')
     code <<-EOH
       git clone -b master https://github.com/drush-ops/drush.git /usr/local/src/drush
       ln -s /usr/local/src/drush/drush /usr/bin/drush
+      ln -s /usr/local/src/drush/drush.complete.sh /etc/bash_completion.d/drush.complete.sh
       cd /usr/local/src/drush
       composer install
     EOH
