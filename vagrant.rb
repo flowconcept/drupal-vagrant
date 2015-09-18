@@ -42,6 +42,10 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = $config[:memory]
     vb.cpus = $config[:cpus]
+
+    # Enable network tracing
+#    vb.customize ['modifyvm', :id, '--nictrace1', 'on']
+#    vb.customize ['modifyvm', :id, '--nictracefile1', 'trace.pcap']
   end
 
   # Synced folders
