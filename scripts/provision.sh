@@ -47,6 +47,7 @@ if [ -n "`sudo -u vagrant -H drush sa | grep vagrant`" ]
     chown -R vagrant /public
     sudo -u vagrant -H drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
     chown -R www-data:www-data /public
+    sudo -u vagrant -H drush --yes @vagrant.dev updb
     sudo -u vagrant -H drush @vagrant.dev cr
   else
     echo "Drupal not installed yet or vagrant.aliases.drushrc.php is missing."
