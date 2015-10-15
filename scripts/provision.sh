@@ -55,7 +55,7 @@ if [ -n "`sudo -u vagrant -H drush sa | grep vagrant`" ]
     echo "To install Drupal now:"
     echo "vagrant ssh"
     echo "cd /var/www/htdocs"
-    echo "drush site-install --db-url=mysql://vagrant:v4gr4nt@localhost/drupal --account-name=flowconcept --account-mail=info@flowconcept.de --account-pass=flow --site-name=flow --site-mail=info@flowconcept.de standard"
+    echo "drush site-install --yes --account-name=flowconcept --account-mail=technik@flowconcept.de --account-pass=flow --site-name="Drupal" --site-mail=technik@flowconcept.de standard"
     echo ""
 fi
 
