@@ -127,6 +127,10 @@ if !File.exists?('/root/.default_recipe_installed')
     action :install
   end
 
+  package 'php5-twig' do
+    action :install
+  end
+
   package 'libssh2-php' do
     action :install
   end
