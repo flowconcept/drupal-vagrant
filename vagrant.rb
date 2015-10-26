@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
 
   # Fix running as tty
   #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
+  config.ssh.pty = false
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
 
