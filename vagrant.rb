@@ -72,6 +72,7 @@ Vagrant.configure("2") do |config|
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
+  config.vbguest.auto_update = false
 
   # Fix running as tty
   #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
