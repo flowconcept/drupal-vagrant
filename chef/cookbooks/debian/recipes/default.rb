@@ -143,6 +143,10 @@ if !File.exists?('/root/.default_recipe_installed')
     action :install
   end
 
+  bash 'npm update' do
+    code 'npm install -g npm@3.x-latest'
+  end
+
   bash 'less autoprefixer' do
     code 'npm install -g less autoprefixer'
   end
