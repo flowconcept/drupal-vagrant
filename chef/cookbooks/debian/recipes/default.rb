@@ -197,6 +197,15 @@ if !File.exists?('/root/.default_recipe_installed')
     EOH
   end
 
+  bash 'console_install' do
+    code <<-EOH
+      curl -LSs http://drupalconsole.com/installer | php
+      mv console.phar /usr/local/bin/drupal
+      ln -s /usr/local/bin/drupal /usr/bin/drupal
+    EOH
+    not_if { ::File.exists?('/usr/local/bin/drupal') }
+  end
+
   bash 'bower_install' do
     code 'npm install -g bower'
   end
