@@ -147,10 +147,6 @@ if !File.exists?('/root/.default_recipe_installed')
     code 'npm install -g npm@3.x-latest'
   end
 
-  bash 'less autoprefixer' do
-    code 'npm install -g less autoprefixer'
-  end
-
   bash 'regenerate ssh host keys' do
     code 'rm -rf /etc/ssh/ssh_host_* && dpkg-reconfigure openssh-server && touch /root/.ssh_host_keys_regenerated'
     only_if do
