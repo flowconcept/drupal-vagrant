@@ -13,7 +13,7 @@ if [ ! -d /public ]; then
 fi
 
 # Run composer install
-sudo -u vagrant -H composer install -d /vagrant -n
+sudo -u vagrant -H composer install --working-dir=/vagrant --no-interaction --no-progress
 
 cd /vagrant
 # Install packages, rebuild npm packages to avoid problems with already
