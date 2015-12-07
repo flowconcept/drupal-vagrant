@@ -136,7 +136,7 @@ if !File.exists?('/root/.default_recipe_installed')
   end
 
   bash 'install node' do
-    code 'curl -sL https://deb.nodesource.com/setup_0.12 | bash -'
+    code 'curl -sL https://deb.nodesource.com/setup_4.x | bash -'
   end
 
   package 'nodejs' do
