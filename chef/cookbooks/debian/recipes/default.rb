@@ -1,13 +1,13 @@
 if !File.exists?('/root/.default_recipe_installed')
 
   # --- update sources list
-  file_content = "deb http://ftp.de.debian.org/debian/ jessie main non-free
-  deb-src http://ftp.de.debian.org/debian/ jessie main non-free\n
-  deb http://security.debian.org/ jessie/updates main non-free
-  deb-src http://security.debian.org/ jessie/updates main non-free\n
-  # jessie-updates, previously known as 'volatile'
-  deb http://ftp.de.debian.org/debian/ jessie-updates main non-free
-  deb-src http://ftp.de.debian.org/debian/ jessie-updates main non-free"
+  file_content = "deb http://httpredir.debian.org/debian jessie main non-free
+deb-src http://httpredir.debian.org/debian jessie main non-free\n
+deb http://security.debian.org/ jessie/updates main non-free
+deb-src http://security.debian.org/ jessie/updates main non-free\n
+# jessie-updates, previously known as 'volatile'
+deb http://httpredir.debian.org/debian jessie-updates main non-free
+deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   file "/etc/apt/sources.list" do
     content file_content
@@ -19,7 +19,7 @@ if !File.exists?('/root/.default_recipe_installed')
   end
 
   bash 'upgrade packages' do
-    code 'apt-get -y upgrade'
+    code 'DEBIAN_FRONTEND=noninteractive apt-get -y upgrade'
   end
 
   # --- Install packages we need ---
