@@ -189,7 +189,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
       ln -s /usr/local/src/drush/drush /usr/bin/drush
       ln -s /usr/local/src/drush/drush.complete.sh /etc/bash_completion.d/drush.complete.sh
       cd /usr/local/src/drush
-      composer install
+      composer install --no-progress
     EOH
   end
 
