@@ -195,9 +195,10 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'console_install' do
     code <<-EOH
-      curl -LSs http://drupalconsole.com/installer | php
-      mv console.phar /usr/local/bin/drupal
-      ln -s /usr/local/bin/drupal /usr/bin/drupal
+      curl https://drupalconsole.com/installer -L -o drupal.phar
+      mv drupal.phar /usr/local/bin/drupal
+      chmod +x /usr/local/bin/drupal
+      drupal init --override
     EOH
     not_if { ::File.exists?('/usr/local/bin/drupal') }
   end
