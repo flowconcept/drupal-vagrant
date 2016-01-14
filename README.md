@@ -1,3 +1,7 @@
+# drupal-vagrant
+vagrant environment for drupal 8 projects.
+
+
 For SSH agent forwarding align these configuration files.
 
 On OSX keys without password need to be added on bash startup:
