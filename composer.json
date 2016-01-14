@@ -1,0 +1,9 @@
+{
+  "name": "flowconcept/drupal-vagrant",
+  "description": "Vagrant environment for for Drupal 8 projects.",
+  "version": "master",
+  "type": "project",
+  "license": "",
+  "minimum-stability": "dev",
+  "require": { }
+}
