@@ -150,7 +150,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
   bash 'regenerate ssh host keys' do
     code 'rm -rf /etc/ssh/ssh_host_* && dpkg-reconfigure openssh-server && touch /root/.ssh_host_keys_regenerated'
     only_if do
-      !File.exists?('/root/.vimvim_host_keys_regenerated')
+      !File.exists?('/root/.ssh_host_keys_regenerated')
     end
   end
 
