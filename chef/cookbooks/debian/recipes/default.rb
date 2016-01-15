@@ -185,11 +185,11 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'drush_install' do
     code <<-EOH
-      git clone -b master https://github.com/drush-ops/drush.git /usr/local/src/drush
-      ln -s /usr/local/src/drush/drush /usr/bin/drush
-      ln -s /usr/local/src/drush/drush.complete.sh /etc/bash_completion.d/drush.complete.sh
-      cd /usr/local/src/drush
-      composer install --no-progress
+      wget http://files.drush.org/drush.phar
+      chmod +x drush.phar
+      mv drush.phar /usr/local/bin/drush
+      drush init
+      sudo -u vagrant -H drush init
     EOH
   end
 
@@ -198,7 +198,8 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
       curl https://drupalconsole.com/installer -L -o drupal.phar
       mv drupal.phar /usr/local/bin/drupal
       chmod +x /usr/local/bin/drupal
-      drupal init --override
+      drupal init
+      sudo -u vagrant -H drupal init
     EOH
     not_if { ::File.exists?('/usr/local/bin/drupal') }
   end
