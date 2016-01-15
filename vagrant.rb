@@ -68,7 +68,10 @@ Vagrant.configure("2") do |config|
   }
   config.cache.auto_detect = false
   $config[:cache].each { |cache| config.cache.enable cache }
-#  config.cache.enable :generic, { "composer" => { :cache_dir => "/root/.composer/cache" }}
+  # Above cache buckets are automatically created for the vagrant user,
+  # add generic ones for the root user
+  config.cache.enable :generic, { "composer" => { :cache_dir => "/root/.composer/cache" }}
+  config.cache.enable :generic, { "npm" => { :cache_dir => "/root/.npm" }}
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
