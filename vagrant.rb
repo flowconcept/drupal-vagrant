@@ -64,21 +64,16 @@ Vagrant.configure("2") do |config|
   config.cache.scope = :box
   config.cache.synced_folder_opts = {
     type: :nfs,
-    mount_options: ["nolock,vers=3,tcp,noatime,actimeo=1"]
+    mount_options: ["nolock,vers=3,tcp"]
   }
   config.cache.auto_detect = false
   $config[:cache].each { |cache| config.cache.enable cache }
-  # Above cache buckets are automatically created for the vagrant user,
-  # add generic ones for the root user
-  config.cache.enable :generic, { "composer" => { :cache_dir => "/root/.composer/cache" }}
-  config.cache.enable :generic, { "npm" => { :cache_dir => "/root/.npm" }}
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
   config.vbguest.auto_update = false
 
   # Fix running as tty
-  #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.ssh.pty = false
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
@@ -104,6 +99,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell" do |shell|
     shell.path = File.dirname(__FILE__) + "/scripts/provision.sh"
     shell.args = site_picker("drush_config")
+    shell.privileged = false
    end
 
   # Forget provisioned site (vagrant-triggers)

@@ -143,15 +143,26 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
     action :install
   end
 
-  bash 'npm update' do
-    code 'npm install -g npm@3.x-latest'
+  bash 'configure global node package location' do
+    code <<-EOH
+      sudo -u vagrant -i npm config set prefix "/home/vagrant/.npm-packages"
+      sudo -u vagrant -i echo "export PATH=/home/vagrant/.npm-packages/bin:$PATH" >> /home/vagrant/.profile
+      sudo -u vagrant -i echo "export PATH=/home/vagrant/.npm-packages/bin:$PATH" >> /home/vagrant/.bashrc
+      sudo -u vagrant -i echo "export NODE_PATH=$NODE_PATH:/home/vagrant/.npm-packages/lib/node_modules" >> /home/vagrant/.bashrc
+    EOH
+  end
+
+  bash 'update npm' do
+    code 'sudo -u vagrant -i npm install -sg npm@3.x-latest'
   end
 
   bash 'regenerate ssh host keys' do
-    code 'rm -rf /etc/ssh/ssh_host_* && dpkg-reconfigure openssh-server && touch /root/.ssh_host_keys_regenerated'
-    only_if do
-      !File.exists?('/root/.ssh_host_keys_regenerated')
-    end
+    code <<-EOH
+      rm -rf /etc/ssh/ssh_host_*
+      dpkg-reconfigure openssh-server
+      touch /root/.ssh_host_keys_regenerated
+    EOH
+    only_if { !File.exists?('/root/.vimvim_host_keys_regenerated') }
   end
 
   # --- Deploy a configuration file ---
@@ -174,42 +185,38 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
     notifies :run, "execute[update-tzdata]"
   end
 
-  bash 'composer_install' do
+  bash 'install global node packages' do
+    code 'sudo -u vagrant -i npm install -sg bower gulp yo'
+  end
+
+  bash 'install composer' do
     code <<-EOH
       curl -sS https://getcomposer.org/installer | php
       mv composer.phar /usr/local/bin/composer
+      chmod +x /usr/local/bin/composer
       ln -s /usr/local/bin/composer /usr/bin/composer
     EOH
-    not_if { ::File.exists?('/usr/local/bin/composer') }
+    only_if { !File.exists?('/usr/local/bin/composer') }
   end
 
-  bash 'drush_install' do
+  bash 'install drush' do
     code <<-EOH
-      wget http://files.drush.org/drush.phar
-      chmod +x drush.phar
+      curl -sS http://files.drush.org/drush.phar -o drush.phar
       mv drush.phar /usr/local/bin/drush
-      drush init
-      sudo -u vagrant -H drush init
+      chmod +x /usr/local/bin/drush
+      sudo -u vagrant -i drush init
     EOH
+    only_if { !File.exists?('/usr/local/bin/drush') }
   end
 
-  bash 'console_install' do
+  bash 'install drupal console' do
     code <<-EOH
-      curl https://drupalconsole.com/installer -L -o drupal.phar
+      curl -sS https://drupalconsole.com/installer -L -o drupal.phar
       mv drupal.phar /usr/local/bin/drupal
       chmod +x /usr/local/bin/drupal
-      drupal init
-      sudo -u vagrant -H drupal init
+      sudo -u vagrant -i drupal init
     EOH
-    not_if { ::File.exists?('/usr/local/bin/drupal') }
-  end
-
-  bash 'bower_install' do
-    code 'npm install -g bower'
-  end
-
-  bash 'gulp_install' do
-    code 'npm install -g gulp'
+    only_if { !File.exists?('/usr/local/bin/drupal') }
   end
 
   service 'apache2' do
