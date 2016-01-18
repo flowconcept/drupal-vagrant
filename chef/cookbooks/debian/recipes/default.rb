@@ -162,7 +162,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
       dpkg-reconfigure openssh-server
       touch /root/.ssh_host_keys_regenerated
     EOH
-    only_if { !File.exists?('/root/.vimvim_host_keys_regenerated') }
+    only_if { !File.exists?('/root/.ssh_host_keys_regenerated') }
   end
 
   # --- Deploy a configuration file ---
