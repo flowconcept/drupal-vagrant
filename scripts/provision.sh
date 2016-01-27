@@ -34,7 +34,7 @@ if [ -n "$SITE" ]; then
   \$sites['localhost'] = '$SITE';" > /vagrant/htdocs/sites/sites-local.php
 
   if [ -d "/vagrant/htdocs/sites/$SITE" ]; then
-    cp /vagrant/htdocs/sites/default/settings.local.php "/vagrant/htdocs/sites/$SITE/settings.local.php"
+    cp /vagrant/htdocs/sites/default/settings-local.php "/vagrant/htdocs/sites/$SITE/settings-local.php"
   fi
 fi
 
@@ -53,7 +53,7 @@ if [ -n "`drush sa | grep vagrant`" ]
     drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
     sudo chown -R www-data:www-data /public
     drush --yes @vagrant.dev updb
-    drush @vagrant.dev cr
+    drush @vagrant.dev cc all
   else
     echo "Drupal not installed yet or vagrant.aliases.drushrc.php is missing."
     echo ""
