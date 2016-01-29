@@ -14,7 +14,8 @@ $config = {
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
-  cache: [:apt, :apt_lists, :chef, :composer, :bower, :npm, :gem]
+  cache: [:apt, :apt_lists, :chef, :composer, :bower, :npm, :gem],
+  recipes: ["debian::default", "debian::mysql", "debian::localdev"]
 }.merge($config || {})
 
 
@@ -82,17 +83,9 @@ Vagrant.configure("2") do |config|
     chef.cookbooks_path = "vagrant/chef/cookbooks"
 #   chef.roles_path     = "../../chef/roles"
 #   chef.add_role "db"
-    chef.add_recipe "debian::default"
-    chef.add_recipe "debian::mysql"
-    chef.add_recipe "debian::localdev"
+    $config[:recipes].each { |recipe| chef.add_recipe recipe }
     chef.json = {}
   end
-
-  # Bootstrap box
-#  config.vm.provision "shell" do |shell|
-#    shell.path = File.dirname(__FILE__) + "/scripts/bootstrap.sh"
-#    shell.args = [Process.uid, Process.gid]
-#   end
 
   # Provision box
   config.vm.provision "shell" do |shell|
