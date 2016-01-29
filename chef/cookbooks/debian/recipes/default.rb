@@ -204,7 +204,6 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
       curl -sS http://files.drush.org/drush.phar -o drush.phar
       mv drush.phar /usr/local/bin/drush
       chmod +x /usr/local/bin/drush
-      sudo -u vagrant -i drush init
     EOH
     only_if { !File.exists?('/usr/local/bin/drush') }
   end
