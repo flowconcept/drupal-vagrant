@@ -5,10 +5,12 @@ SITE="$1"
 # Sync configuration files
 sudo rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
 sudo chown -R vagrant /home/vagrant
+sudo adduser vagrant www-data
 
 # Prepare public files directory
 if [ ! -d /public ]; then
   sudo mkdir /public
+  sudo chmod g+w /public
   sudo chown -R www-data:www-data /public
 fi
 
