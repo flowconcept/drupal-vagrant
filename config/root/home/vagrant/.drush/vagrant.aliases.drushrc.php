@@ -41,7 +41,7 @@ call_user_func(function () use (&$aliases) {
         $aliases['dev']['path-aliases'] = array('%site' => 'sites/' . $sites['localhost'] . '/');
       }
       // Load staging configuration
-      $drush_alias = '/var/www/drush_config/' . $sites['localhost'] . '.aliases.drushrc.php';
+      $drush_alias = '/var/www/config/' . $sites['localhost'] . '.aliases.drushrc.php';
       if (file_exists($drush_alias)) {
         require($drush_alias);
       }
@@ -50,11 +50,11 @@ call_user_func(function () use (&$aliases) {
 });
 
 // If no staging configuration found in sites-local.php, try loading staging configuration
-if (empty($aliases['staging']) && file_exists('/var/www/drush_config')) {
-  if ($handle = opendir('/var/www/drush_config')) {
+if (empty($aliases['staging']) && file_exists('/var/www/config')) {
+  if ($handle = opendir('/var/www/config')) {
     while (FALSE !== ($file = readdir($handle))) {
-      if (pathinfo($file, PATHINFO_EXTENSION) == 'php') {
-        require('/var/www/drush_config/' . $file);
+      if (preg_match('/aliases\.drushrc\.php/', pathinfo($file, PATHINFO_BASENAME))) {
+        require('/var/www/config/' . $file);
       }
     }
   }
