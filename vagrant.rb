@@ -9,8 +9,7 @@ check_plugins
 
 # Init $config hash with default values
 $config = {
-  box: "opscode-debian-8.2",
-  box_url: "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-8.2_chef-provisionerless.box",
+  box: "bento/debian-8.3",
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
