@@ -43,6 +43,9 @@ Vagrant.configure("2") do |config|
     vb.memory = $config[:memory]
     vb.cpus = $config[:cpus]
 
+    # Enable linked clones
+    vb.linked_clone = true
+
     # Enable network tracing
 #    vb.customize ['modifyvm', :id, '--nictrace1', 'on']
 #    vb.customize ['modifyvm', :id, '--nictracefile1', 'trace.pcap']
