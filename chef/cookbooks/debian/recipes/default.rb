@@ -145,6 +145,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'configure global node package location' do
     code <<-EOH
+      sudo -u vagrant -i npm config set depth 0"
       sudo -u vagrant -i npm config set prefix "/home/vagrant/.npm-packages"
       sudo -u vagrant -i echo "export PATH=/home/vagrant/.npm-packages/bin:$PATH" >> /home/vagrant/.profile
       sudo -u vagrant -i echo "export PATH=/home/vagrant/.npm-packages/bin:$PATH" >> /home/vagrant/.bashrc
