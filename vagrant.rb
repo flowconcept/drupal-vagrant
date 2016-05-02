@@ -9,7 +9,7 @@ check_plugins
 
 # Init $config hash with default values
 $config = {
-  box: "bento/debian-8.3",
+  box: "bento/debian-8.4",
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
     else
       raise "Unknown $config_vm_synced_folder_type #{$config[:synced_folder_type]}"
   end
-  
+
   # Setup cache buckets (vagrant-cachier)
   config.cache.scope = :box
   config.cache.synced_folder_opts = {
