@@ -187,7 +187,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
   end
 
   bash 'install global node packages' do
-    code 'sudo -u vagrant -i npm install -sg bower gulp yo'
+    code 'sudo -u vagrant -i npm install -sg bower gulp'
   end
 
   bash 'install composer' do
