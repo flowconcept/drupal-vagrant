@@ -42,8 +42,6 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = $config[:memory]
     vb.cpus = $config[:cpus]
-    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
-    vb.customize ['modifyvm', :id, '--ioapic', 'on']
 
     # Enable linked clones
     vb.linked_clone = true
