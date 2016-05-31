@@ -54,6 +54,7 @@ if [ -n "`drush sa | grep vagrant`" ]
     sudo chown -R vagrant /public
     drush --yes rsync @vagrant.staging:%files @vagrant.dev:%files
     sudo chown -R www-data:www-data /public
+    sudo chmod -R g+w /public
     drush --yes @vagrant.dev updb
     drush @vagrant.dev cr
   else

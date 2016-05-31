@@ -89,7 +89,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
 
   # Overwrite globally installed drush with version controlled by compass
   bash 'local drush' do
-    code 'ln -sf /vagrant/vendor/bin/drush /usr/bin/drush'
+    code 'ln -sf /vagrant/vendor/bin/drush /usr/local/bin/drush'
   end
 
   bash 'set marker' do
