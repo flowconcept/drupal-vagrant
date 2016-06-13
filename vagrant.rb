@@ -82,7 +82,6 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.provision :chef_solo do |chef|
-    chef.version = "12.10.24"
     chef.cookbooks_path = "vagrant/chef/cookbooks"
 #   chef.roles_path     = "../../chef/roles"
 #   chef.add_role "db"
