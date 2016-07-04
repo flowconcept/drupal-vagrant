@@ -52,7 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.cpus = $config[:cpus]
 
     # Enable linked clone when building box
-    if $config[:build]
+    if $config[:build] and Vagrant::VERSION =~ /^1.8/
       vb.linked_clone = true
     end
 
