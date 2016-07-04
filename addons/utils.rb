@@ -1,6 +1,9 @@
 # Notify user about missing vagrant plugins.
-def check_plugins
-  plugins = %w(vbguest cachier auto_network triggers)
+def check_plugins(build)
+  plugins = %w(vbguest auto_network triggers)
+  if build
+    plugins.push("cachier")
+  end
 
   missing = []
   plugins.each do |plugin|

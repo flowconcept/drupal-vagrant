@@ -1,10 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Configuration overrides
-#$config = {
-#  box: "bento/debian-8.3",
-#  synced_folder_type: "nfs",
-#}
+$config = {
+  # Set to true to build box from scratch, otherwise use pre-provisioned box below
+  build: false,
+  build_box: "bento/debian-8.4",
+
+  # Name and url of a pre-provisioned box
+  box: "name",
+  box_url: "http://name.flowdemo.de/boxes/name-0.1.box"
+}
 
 require "./vagrant/vagrant.rb"

@@ -4,12 +4,10 @@
 require File.dirname(__FILE__) + "/addons/utils.rb"
 require File.dirname(__FILE__) + "/addons/site_picker.rb"
 
-check_plugins
-
-
-# Init $config hash with default values
+# Init defaults
 $config = {
-  box: "bento/debian-8.4",
+  build: true,
+  build_box: "bento/debian-8.4",
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
@@ -18,10 +16,18 @@ $config = {
 }.merge($config || {})
 
 
+check_plugins($config[:build])
+
+
 Vagrant.configure("2") do |config|
 
-  config.vm.box      = $config[:box]
-  config.vm.box_url  = $config[:box_url]
+  if $config[:build]
+    config.vm.box     = $config[:build_box]
+  else
+    config.vm.box     = $config[:box]
+    config.vm.box_url = $config[:box_url]
+  end
+
   config.vm.hostname = 'flow-vm'
 
   # Networks
@@ -43,12 +49,14 @@ Vagrant.configure("2") do |config|
     vb.memory = $config[:memory]
     vb.cpus = $config[:cpus]
 
-    # Enable linked clones
-    vb.linked_clone = true
+    # Enable linked clone when building box
+    if $config[:build]
+      vb.linked_clone = true
+    end
 
     # Enable network tracing
-#    vb.customize ['modifyvm', :id, '--nictrace1', 'on']
-#    vb.customize ['modifyvm', :id, '--nictracefile1', 'trace.pcap']
+    #vb.customize ['modifyvm', :id, '--nictrace1', 'on']
+    #vb.customize ['modifyvm', :id, '--nictracefile1', 'trace.pcap']
   end
 
   # Synced folders
@@ -63,14 +71,16 @@ Vagrant.configure("2") do |config|
       raise "Unknown $config_vm_synced_folder_type #{$config[:synced_folder_type]}"
   end
 
-  # Setup cache buckets (vagrant-cachier)
-  config.cache.scope = :box
-  config.cache.synced_folder_opts = {
-    type: :nfs,
-    mount_options: ["nolock,vers=3,tcp"]
-  }
-  config.cache.auto_detect = false
-  $config[:cache].each { |cache| config.cache.enable cache }
+  # Setup cache buckets when building box (vagrant-cachier)
+  if $config[:build]
+    config.cache.scope = :box
+    config.cache.synced_folder_opts = {
+      type: :nfs,
+      mount_options: ["nolock,vers=3,tcp"]
+    }
+    config.cache.auto_detect = false
+    $config[:cache].each { |cache| config.cache.enable cache }
+  end
 
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
@@ -79,7 +89,6 @@ Vagrant.configure("2") do |config|
   config.ssh.pty = false
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
-
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "vagrant/chef/cookbooks"
