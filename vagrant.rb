@@ -1,5 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+VAGRANTFILE_API_VERSION = '2'
+Vagrant.require_version '>= 1.8.3'
 
 require File.dirname(__FILE__) + "/addons/utils.rb"
 require File.dirname(__FILE__) + "/addons/site_picker.rb"
@@ -19,7 +21,7 @@ $config = {
 check_plugins($config[:build])
 
 
-Vagrant.configure("2") do |config|
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if $config[:build]
     config.vm.box     = $config[:build_box]
