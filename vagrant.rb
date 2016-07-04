@@ -87,8 +87,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Sync VirtualBox guest additions (vagrant-vbguest)
   config.vbguest.no_remote = true
 
-  # Fix running as tty
-  config.ssh.pty = false
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
 
