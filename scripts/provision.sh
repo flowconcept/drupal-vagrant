@@ -3,7 +3,7 @@
 SITE="$1"
 
 # Sync configuration files
-sudo rsync --keep-dirlinks -recursive --perms --owner --group /vagrant/vagrant/config/root/ /
+sudo rsync --keep-dirlinks --recursive --perms --owner --group /vagrant/vagrant/config/root/ /
 sudo chown -R vagrant /home/vagrant
 sudo adduser vagrant www-data
 
