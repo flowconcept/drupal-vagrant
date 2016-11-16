@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
   # Provision box
   config.vm.provision "shell" do |shell|
     shell.path = File.dirname(__FILE__) + "/scripts/provision.sh"
-    shell.args = site_picker("drush_config")
+    shell.args = site_picker("config")
     shell.privileged = false
    end
 
