@@ -90,6 +90,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
 
+  # Insert custom ssh keys
+  config.ssh.insert_key = false
+  config.ssh.private_key_path = [
+    File.dirname(__FILE__) + "/keys/private",
+    "~/.vagrant.d/insecure_private_key"
+  ]
+  config.vm.provision "file", source: "keys/public", destination: "~/.ssh/authorized_keys"
+  config.vm.provision "shell", inline: <<-EOC
+    sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
+    sudo service ssh restart
+  EOC
+
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "vagrant/chef/cookbooks"
 #   chef.roles_path     = "../../chef/roles"
