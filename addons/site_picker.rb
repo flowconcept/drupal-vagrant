@@ -3,7 +3,7 @@
 # drush_config_directory - The directory containing *.drushrc.php files.
 #
 # Returns the site name or an empty string, if only one site exists.
-def site_picker(drush_config_directory = "drush_config")
+def site_picker(drush_config_directory = "config")
 
   # This script should only run with vagrant commands "up" and "provision"
   return "" unless ARGV.include?("up") || ARGV.include?("provision")
