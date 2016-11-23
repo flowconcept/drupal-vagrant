@@ -96,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     File.dirname(__FILE__) + "/keys/private",
     "~/.vagrant.d/insecure_private_key"
   ]
-  config.vm.provision "file", source: "keys/public", destination: "~/.ssh/authorized_keys"
+  config.vm.provision "file", source: File.dirname(__FILE__) + "/keys/public", destination: "~/.ssh/authorized_keys"
   config.vm.provision "shell", inline: <<-EOC
     sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
     sudo service ssh restart
