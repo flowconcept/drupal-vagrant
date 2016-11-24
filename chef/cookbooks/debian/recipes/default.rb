@@ -136,7 +136,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
   end
 
   bash 'install node' do
-    code 'curl -sL https://deb.nodesource.com/setup_4.x | bash -'
+    code 'curl -sL https://deb.nodesource.com/setup_6.x | bash -'
   end
 
   package 'nodejs' do
