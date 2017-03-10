@@ -4,7 +4,7 @@
 $config = {
   # Set to true to build box from scratch, otherwise use pre-provisioned box below
   build: false,
-  build_box: "bento/debian-8.4",
+  build_box: "bento/debian-8.7",
 
   # Name and url of a pre-provisioned box
   box: "name",

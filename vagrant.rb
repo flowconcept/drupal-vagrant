@@ -9,7 +9,7 @@ require File.dirname(__FILE__) + "/addons/site_picker.rb"
 # Init defaults
 $config = {
   build: true,
-  build_box: "bento/debian-8.4",
+  build_box: "bento/debian-8.7",
   synced_folder_type: "nfs",
   memory: 1024,
   cpus: 1,
