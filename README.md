@@ -11,7 +11,7 @@ update of VirtualBox guest additions).
 ## Getting started
 
 Clone this repository into a subdirectory ```vagrant``` of an existing Drupal
-installation, e.g. [flowconcept/drupal-project|https://github.com/flowconcept/drupal-project]:
+installation, e.g. [flowconcept/drupal-project](https://github.com/flowconcept/drupal-project):
 
     git clone flowconcept/drupal-vagrant vagrant
 
