@@ -20,6 +20,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'upgrade packages' do
     code 'DEBIAN_FRONTEND=noninteractive apt-get -y upgrade'
+    code 'DEBIAN_FRONTEND=noninteractive apt-get -y upgrade'
   end
 
   # --- Install packages we need ---
@@ -214,7 +215,6 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
       curl -sS https://drupalconsole.com/installer -L -o drupal.phar
       mv drupal.phar /usr/local/bin/drupal
       chmod +x /usr/local/bin/drupal
-      sudo -u vagrant -i drupal init
     EOH
     only_if { !File.exists?('/usr/local/bin/drupal') }
   end
