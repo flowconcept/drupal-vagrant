@@ -20,7 +20,6 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'upgrade packages' do
     code 'DEBIAN_FRONTEND=noninteractive apt-get -y upgrade'
-    code 'DEBIAN_FRONTEND=noninteractive apt-get -y upgrade'
   end
 
   # --- Install packages we need ---
