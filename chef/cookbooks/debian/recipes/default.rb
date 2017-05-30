@@ -154,7 +154,7 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
   end
 
   bash 'update npm' do
-    code 'sudo -u vagrant -i npm install -sg npm@3.x-latest'
+    code 'sudo -u vagrant -i npm install -sg npm'
   end
 
   bash 'regenerate ssh host keys' do
