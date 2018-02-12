@@ -84,6 +84,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
  * in the early stages of development, you may want to disable it.
  */
 # $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+# $settings['cache']['bins']['page'] = 'cache.backend.null';
 
 /**
  * Allow test modules and themes to be installed.
