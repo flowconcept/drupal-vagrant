@@ -202,9 +202,13 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
 
   bash 'install drush' do
     code <<-EOH
-      curl -sS http://files.drush.org/drush.phar -o drush.phar
-      mv drush.phar /usr/local/bin/drush
-      chmod +x /usr/local/bin/drush
+    git clone https://github.com/drush-ops/drush.git /usr/local/src/drush
+    cd /usr/local/src/drush
+    git checkout 7.0.0-rc1
+    ln -s /usr/local/src/drush/drush /usr/local/bin/drush
+    composer install
+    composer update
+    drush --version
     EOH
     only_if { !File.exists?('/usr/local/bin/drush') }
   end
