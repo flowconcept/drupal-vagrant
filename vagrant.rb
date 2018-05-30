@@ -9,10 +9,10 @@ require File.dirname(__FILE__) + "/addons/site_picker.rb"
 # Init defaults
 $config = {
   build: true,
-  build_box: "bento/debian-8.7",
+  build_box: "bento/debian-9.4",
   synced_folder_type: "nfs",
-  memory: 1024,
-  cpus: 1,
+  memory: 2048,
+  cpus: 2,
   cache: [:apt, :apt_lists, :chef, :composer, :bower, :npm, :gem],
   recipes: ["debian::default", "debian::mysql", "debian::localdev"]
 }.merge($config || {})
@@ -66,7 +66,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     when "rsync"
       config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".idea/"]
     when "nfs"
-      config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false, mount_options: ["nolock,vers=3,tcp,noatime,actimeo=1"]
+      config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false, nfs: true, mount_options: ["nolock,vers=3,tcp,noatime,actimeo=1"]
     when "default"
       config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data", mount_options: ["dmode=775","fmode=775"]
     else

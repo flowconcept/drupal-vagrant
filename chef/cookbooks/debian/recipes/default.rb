@@ -1,17 +1,27 @@
 if !File.exists?('/root/.default_recipe_installed')
 
   # --- update sources list
-  file_content = "deb http://httpredir.debian.org/debian jessie main non-free
-deb-src http://httpredir.debian.org/debian jessie main non-free\n
-deb http://security.debian.org/ jessie/updates main non-free
-deb-src http://security.debian.org/ jessie/updates main non-free\n
+  file_content = "deb http://httpredir.debian.org/debian stretch main non-free
+deb-src http://httpredir.debian.org/debian stretch main non-free\n
+deb http://security.debian.org/ stretch/updates main non-free
+deb-src http://security.debian.org/ stretch/updates main non-free\n
 # jessie-updates, previously known as 'volatile'
-deb http://httpredir.debian.org/debian jessie-updates main non-free
-deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
+deb http://httpredir.debian.org/debian stretch-updates main non-free
+deb-src http://httpredir.debian.org/debian stretch-updates main non-free
+deb https://deb.nodesource.com/node_9.x jessie main
+deb-src https://deb.nodesource.com/node_9.x jessie main\n"
 
   file "/etc/apt/sources.list" do
     content file_content
     mode "0644"
+  end
+
+  bash 'install transport-https' do
+    code 'apt-get install apt-transport-https'
+  end
+
+  bash 'install nodesource gpg key' do
+    code 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -'
   end
 
   bash 'update apt cache' do
@@ -71,31 +81,35 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
     action :install
   end
 
-  package 'apache2-mpm-worker' do
+  package 'libapache2-mpm-itk' do
     action :install
   end
 
-  package 'libapache2-mod-fastcgi' do
+  package 'libapache2-mod-fcgid' do
     action :install
   end
+
+  #package 'libapache2-mod-php7.0' do
+  #  action :install
+  #end
 
   bash 'enable apache2 modules' do
-    code 'a2enmod actions alias expires fastcgi headers rewrite deflate ssl'
+    code 'a2enmod actions alias expires fcgid headers rewrite deflate ssl proxy_fcgi'
   end
 
   package 'imagemagick' do
     action :install
   end
 
-  package 'php5-cli' do
+  package 'php-cli' do
     action :install
   end
 
-  package 'php5-fpm' do
+  package 'php7.0-fpm' do
     action :install
   end
 
-  package 'php-apc' do
+  package 'php-apcu' do
     action :install
   end
 
@@ -103,40 +117,44 @@ deb-src http://httpredir.debian.org/debian jessie-updates main non-free\n"
     action :install
   end
 
-  package 'php5-curl' do
+  package 'php-curl' do
     action :install
   end
 
-  package 'php5-gd' do
+  package 'php-gd' do
     action :install
   end
 
-  package 'php5-imagick' do
+  package 'php-imagick' do
     action :install
   end
 
-  package 'php5-mcrypt' do
+  package 'php-mcrypt' do
     action :install
   end
 
-  package 'php5-mysql' do
+  package 'php-mysql' do
     action :install
   end
 
-  package 'php5-dev' do
+  package 'php-dev' do
     action :install
   end
 
-  package 'php5-twig' do
+  package 'php-zip' do
     action :install
   end
 
-  package 'libssh2-php' do
+  package 'php-twig' do
+    action :install
+  end
+
+  package 'php-ssh2' do
     action :install
   end
 
   bash 'install node' do
-    code 'curl -sL https://deb.nodesource.com/setup_6.x | bash -'
+    code 'apt-get install nodejs'
   end
 
   package 'nodejs' do

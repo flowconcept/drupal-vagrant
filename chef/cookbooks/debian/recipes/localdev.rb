@@ -1,6 +1,6 @@
 if !File.exists?('/root/.localdev_recipe_installed')
 
-  package 'php5-xdebug' do
+  package 'php-xdebug' do
     action :install
   end
 
@@ -33,10 +33,10 @@ if !File.exists?('/root/.localdev_recipe_installed')
   # Link vagrant dir
   bash 'link vagrant dir' do
     code <<-EOH
-    rm -rf /var/www/
-    ln -s /vagrant /var/www
-    mkdir -p /var/www/private
-    chown -R www-data:www-data /var/www
+    sudo rm -rf /var/www/
+    sudo ln -s /vagrant /var/www
+    sudo mkdir -p /var/www/private
+    sudo chown -R www-data:www-data /var/www
     EOH
   end
 
@@ -59,12 +59,16 @@ if !File.exists?('/root/.localdev_recipe_installed')
     code 'a2dissite 000-default; a2ensite vagrant'
   end
 
+  bash 'Activate php-fpm configuration' do
+    code 'sudo ln -s /etc/apache2/conf-available/php7.0-fpm.conf /etc/apache2/conf-enabled/php7.0-fpm.conf'
+  end
+
   # Restart apache
   service 'apache2' do
     action :restart
   end
 
-  service 'php5-fpm' do
+  service 'php7.0-fpm' do
     action :restart
   end
 
