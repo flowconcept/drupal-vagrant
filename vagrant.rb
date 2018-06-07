@@ -12,7 +12,7 @@ $config = {
   build_box: "bento/debian-9.4",
   synced_folder_type: "nfs",
   memory: 2048,
-  cpus: 2,
+  cpus: 1,
   cache: [:apt, :apt_lists, :chef, :composer, :bower, :npm, :gem],
   recipes: ["debian::default", "debian::mysql", "debian::localdev"]
 }.merge($config || {})
