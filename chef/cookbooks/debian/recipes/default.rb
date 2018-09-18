@@ -141,6 +141,10 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
+  package 'php-bcmath' do
+    action :install
+  end
+
   package 'php-zip' do
     action :install
   end
