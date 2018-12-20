@@ -229,7 +229,7 @@ deb-src https://deb.nodesource.com/node_9.x stretch main\n"
 
   bash 'install drush' do
     code <<-EOH
-      curl -sS http://files.drush.org/drush.phar -o drush.phar
+      wget -qO drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar
       mv drush.phar /usr/local/bin/drush
       chmod +x /usr/local/bin/drush
     EOH

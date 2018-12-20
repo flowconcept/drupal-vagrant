@@ -110,6 +110,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.json = {}
   end
 
+  ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+  config.vm.provision 'shell', inline: "echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys", privileged: false
+  config.ssh.insert_key = false
+
+  config.vm.provision "shell" do |s|
+    ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
+    ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+    s.inline = <<-SHELL
+      echo Provisioning public ssh key...
+      [ -e /home/vagrant/.ssh/id_rsa.pub ] && rm /home/vagrant/.ssh/id_rsa.pub
+      touch /home/vagrant/.ssh/id_rsa.pub
+      echo "#{ssh_pub_key}" >> /home/vagrant/.ssh/id_rsa.pub
+
+      echo Provisioning private ssh key...
+      [ -e /home/vagrant/.ssh/id_rsa ] && rm /home/vagrant/.ssh/id_rsa
+      touch /home/vagrant/.ssh/id_rsa
+      echo "#{ssh_prv_key}" >> /home/vagrant/.ssh/id_rsa
+      chmod 400 /home/vagrant/.ssh/id_rsa
+
+      echo Provisioning of ssh keys completed [Success].
+    SHELL
+  end
+
   # Provision box
   config.vm.provision "shell" do |shell|
     shell.path = File.dirname(__FILE__) + "/scripts/provision.sh"

@@ -20,13 +20,14 @@ cd /vagrant
 composer install --working-dir=/vagrant --no-interaction --no-progress
 
 # Install project-specific packages
+cd /vagrant/docroot/themes/nrwgov
+
 npm -s install
 # Rebuild node packages to avoid problems with differing npm versions inside and
 # outside of vm
 npm -s rebuild
 
 # Build assets
-bower install
 COMPASS_PRODUCTION=true gulp build
 
 # Configure drupal 'localhost' if multisite project
@@ -62,8 +63,8 @@ if [ -n "`drush sa | grep vagrant`" ]
     echo ""
     echo "To install Drupal now:"
     echo "vagrant ssh"
-    echo "cd /var/www/htdocs"
-    echo "drush site-install --yes --account-name=flowconcept --account-mail=technik@flowconcept.de --account-pass=flow --site-name="Drupal" --site-mail=technik@flowconcept.de standard"
+    echo "cd /var/www/docroot"
+    echo "drush site-install --yes --account-name=flowconcept --account-mail=technik@flowconcept.de --account-pass=flow --site-name="Drupal" --site-mail=technik@flowconcept.de degov"
     echo ""
 fi
 

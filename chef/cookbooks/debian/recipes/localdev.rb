@@ -40,7 +40,6 @@ if !File.exists?('/root/.localdev_recipe_installed')
     EOH
   end
 
-
   bash 'chown home' do
     code 'chown -R vagrant /home/vagrant'
   end
@@ -87,13 +86,8 @@ if !File.exists?('/root/.localdev_recipe_installed')
     echo "alias l='ls --color=auto -lah'" >> /root/.bashrc
     echo "alias l='ls --color=auto -lah'" >> /home/vagrant/.bashrc
     echo "alias drv='drush @vagrant.dev'" >> /home/vagrant/.bashrc
-    echo "if [ -f ~/.drush_bashrc ] ; then . ~/.drush_bashrc ; fi" >> /home/vagrant/.bashrc
+  #  echo "if [ -f ~/.drush_bashrc ] ; then . ~/.drush_bashrc ; fi" >> /home/vagrant/.bashrc
     EOH
-  end
-
-  # Overwrite globally installed drush with version controlled by compass
-  bash 'local drush' do
-    code 'ln -sf /vagrant/vendor/bin/drush /usr/local/bin/drush'
   end
 
   bash 'set marker' do
