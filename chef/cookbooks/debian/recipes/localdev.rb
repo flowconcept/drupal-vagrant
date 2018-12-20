@@ -1,6 +1,6 @@
 if !File.exists?('/root/.localdev_recipe_installed')
 
-  package 'php-xdebug' do
+  package 'php7.2-xdebug' do
     action :install
   end
 
@@ -60,7 +60,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
   end
 
   bash 'Activate php-fpm configuration' do
-    code 'sudo ln -s /etc/apache2/conf-available/php7.0-fpm.conf /etc/apache2/conf-enabled/php7.0-fpm.conf'
+    code 'sudo ln -s /etc/apache2/conf-available/php7.2-fpm.conf /etc/apache2/conf-enabled/php7.2-fpm.conf'
   end
 
   # Restart apache
@@ -68,7 +68,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
     action :restart
   end
 
-  service 'php7.0-fpm' do
+  service 'php7.2-fpm' do
     action :restart
   end
 

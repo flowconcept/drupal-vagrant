@@ -8,8 +8,9 @@ deb-src http://security.debian.org/ stretch/updates main non-free\n
 # jessie-updates, previously known as 'volatile'
 deb http://httpredir.debian.org/debian stretch-updates main non-free
 deb-src http://httpredir.debian.org/debian stretch-updates main non-free
-deb https://deb.nodesource.com/node_9.x jessie main
-deb-src https://deb.nodesource.com/node_9.x jessie main\n"
+deb https://packages.sury.org/php/ stretch main
+deb https://deb.nodesource.com/node_9.x stretch main
+deb-src https://deb.nodesource.com/node_9.x stretch main\n"
 
   file "/etc/apt/sources.list" do
     content file_content
@@ -22,6 +23,10 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
 
   bash 'install nodesource gpg key' do
     code 'curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -'
+  end
+
+  bash 'install php7.2 gpg key' do
+    code 'curl --silent https://packages.sury.org/php/apt.gpg | sudo apt-key add -'
   end
 
   bash 'update apt cache' do
@@ -101,15 +106,15 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
-  package 'php-cli' do
+  package 'php7.2-cli' do
     action :install
   end
 
-  package 'php7.0-fpm' do
+  package 'php7.2-fpm' do
     action :install
   end
 
-  package 'php-apcu' do
+  package 'php7.2-apcu' do
     action :install
   end
 
@@ -117,15 +122,15 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
-  package 'php-curl' do
+  package 'php7.2-curl' do
     action :install
   end
 
-  package 'php-gd' do
+  package 'php7.2-gd' do
     action :install
   end
 
-  package 'php-imagick' do
+  package 'php7.2-imagick' do
     action :install
   end
 
@@ -133,19 +138,19 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
-  package 'php-mysql' do
+  package 'php7.2-mysql' do
     action :install
   end
 
-  package 'php-dev' do
+  package 'php7.2-dev' do
     action :install
   end
 
-  package 'php-bcmath' do
+  package 'php7.2-bcmath' do
     action :install
   end
 
-  package 'php-zip' do
+  package 'php7.2-zip' do
     action :install
   end
 
@@ -153,7 +158,7 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
-  package 'php-ssh2' do
+  package 'php7.2-ssh2' do
     action :install
   end
 
