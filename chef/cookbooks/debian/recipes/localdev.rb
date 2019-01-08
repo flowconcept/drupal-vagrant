@@ -1,6 +1,6 @@
 if !File.exists?('/root/.localdev_recipe_installed')
 
-  package 'php5-xdebug' do
+  package 'php7.2-xdebug' do
     action :install
   end
 
@@ -33,13 +33,12 @@ if !File.exists?('/root/.localdev_recipe_installed')
   # Link vagrant dir
   bash 'link vagrant dir' do
     code <<-EOH
-    rm -rf /var/www/
-    ln -s /vagrant /var/www
-    mkdir -p /var/www/private
-    chown -R www-data:www-data /var/www
+    sudo rm -rf /var/www/
+    sudo ln -s /vagrant /var/www
+    sudo mkdir -p /var/www/private
+    sudo chown -R www-data:www-data /var/www
     EOH
   end
-
 
   bash 'chown home' do
     code 'chown -R vagrant /home/vagrant'
@@ -59,12 +58,16 @@ if !File.exists?('/root/.localdev_recipe_installed')
     code 'a2dissite 000-default; a2ensite vagrant'
   end
 
+  bash 'Activate php-fpm configuration' do
+    code 'sudo ln -s /etc/apache2/conf-available/php7.2-fpm.conf /etc/apache2/conf-enabled/php7.2-fpm.conf'
+  end
+
   # Restart apache
   service 'apache2' do
     action :restart
   end
 
-  service 'php5-fpm' do
+  service 'php7.2-fpm' do
     action :restart
   end
 
@@ -83,13 +86,8 @@ if !File.exists?('/root/.localdev_recipe_installed')
     echo "alias l='ls --color=auto -lah'" >> /root/.bashrc
     echo "alias l='ls --color=auto -lah'" >> /home/vagrant/.bashrc
     echo "alias drv='drush @vagrant.dev'" >> /home/vagrant/.bashrc
-    echo "if [ -f ~/.drush_bashrc ] ; then . ~/.drush_bashrc ; fi" >> /home/vagrant/.bashrc
+  #  echo "if [ -f ~/.drush_bashrc ] ; then . ~/.drush_bashrc ; fi" >> /home/vagrant/.bashrc
     EOH
-  end
-
-  # Overwrite globally installed drush with version controlled by compass
-  bash 'local drush' do
-    code 'ln -sf /vagrant/vendor/bin/drush /usr/local/bin/drush'
   end
 
   bash 'set marker' do
