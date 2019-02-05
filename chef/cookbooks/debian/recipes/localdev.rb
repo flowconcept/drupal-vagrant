@@ -86,7 +86,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
     code <<-EOH
     echo "alias l='ls --color=auto -lah'" >> /root/.bashrc
     echo "alias l='ls --color=auto -lah'" >> /home/vagrant/.bashrc
-    echo "alias drv='drush @vagrant.dev'" >> /home/vagrant/.bashrc
+    echo "alias drv='drush @vagrant.dev -vvv'" >> /home/vagrant/.bashrc
     echo "if [ -f ~/.drush_bashrc ] ; then . ~/.drush_bashrc ; fi" >> /home/vagrant/.bashrc
     EOH
   end
