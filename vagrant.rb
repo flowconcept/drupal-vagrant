@@ -103,6 +103,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   EOC
 
   config.vm.provision :chef_solo do |chef|
+    chef.version = "14.12.9"
     chef.cookbooks_path = "vagrant/chef/cookbooks"
 #   chef.roles_path     = "../../chef/roles"
 #   chef.add_role "db"
