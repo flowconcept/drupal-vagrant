@@ -103,13 +103,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   EOC
 
   config.vm.provision :chef_solo do |chef|
+    chef.version = "14.12.9"
     chef.cookbooks_path = "vagrant/chef/cookbooks"
 #   chef.roles_path     = "../../chef/roles"
 #   chef.add_role "db"
     $config[:recipes].each { |recipe| chef.add_recipe recipe }
     chef.json = {}
   end
-
+  
   # Provision box
   config.vm.provision "shell" do |shell|
     shell.path = File.dirname(__FILE__) + "/scripts/provision.sh"
