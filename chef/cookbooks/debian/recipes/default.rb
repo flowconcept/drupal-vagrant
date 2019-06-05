@@ -1,5 +1,9 @@
 if !File.exists?('/root/.default_recipe_installed')
 
+ bash 'get key' do
+    code 'wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -'
+ end
+
   # --- update sources list
   file_content = "deb http://httpredir.debian.org/debian stretch main non-free
 deb-src http://httpredir.debian.org/debian stretch main non-free\n
@@ -8,6 +12,7 @@ deb-src http://security.debian.org/ stretch/updates main non-free\n
 # jessie-updates, previously known as 'volatile'
 deb http://httpredir.debian.org/debian stretch-updates main non-free
 deb-src http://httpredir.debian.org/debian stretch-updates main non-free
+deb https://packages.sury.org/php/ stretch main
 deb https://deb.nodesource.com/node_9.x jessie main
 deb-src https://deb.nodesource.com/node_9.x jessie main\n"
 
@@ -61,9 +66,9 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     action :install
   end
 
-  package 'less' do
-    action :install
-  end
+#  package 'less' do
+#    action :install
+#  end
 
   package 'poppler-utils' do
     action :install
@@ -97,15 +102,15 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     code 'a2enmod actions alias expires fcgid headers rewrite deflate ssl proxy_fcgi'
   end
 
-  package 'imagemagick' do
-    action :install
-  end
+#  package 'imagemagick' do
+#    action :install
+#  end
 
   package 'php-cli' do
     action :install
   end
 
-  package 'php7.0-fpm' do
+  package 'php7.3-fpm' do
     action :install
   end
 

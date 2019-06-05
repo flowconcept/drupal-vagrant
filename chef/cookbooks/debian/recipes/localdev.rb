@@ -31,14 +31,14 @@ if !File.exists?('/root/.localdev_recipe_installed')
   end
 
   # Link vagrant dir
-  bash 'link vagrant dir' do
-    code <<-EOH
-    sudo rm -rf /var/www/
-    sudo ln -s /vagrant /var/www
-    sudo mkdir -p /var/www/private
-    sudo chown -R www-data:www-data /var/www
-    EOH
-  end
+  #bash 'link vagrant dir' do
+  #  code <<-EOH
+  #  sudo rm -rf /var/www/
+  #  sudo ln -s /vagrant /var/www
+  #  sudo mkdir -p /var/www/private
+  #  sudo chown -R www-data:www-data /var/www
+  #  EOH
+  #end
 
 
   bash 'chown home' do
@@ -60,7 +60,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
   end
 
   bash 'Activate php-fpm configuration' do
-    code 'sudo ln -s /etc/apache2/conf-available/php7.0-fpm.conf /etc/apache2/conf-enabled/php7.0-fpm.conf'
+    code 'sudo ln -s /etc/apache2/conf-available/php7.3-fpm.conf /etc/apache2/conf-enabled/php7.3-fpm.conf'
   end
 
   # Restart apache
@@ -68,7 +68,7 @@ if !File.exists?('/root/.localdev_recipe_installed')
     action :restart
   end
 
-  service 'php7.0-fpm' do
+  service 'php7.3-fpm' do
     action :restart
   end
 
