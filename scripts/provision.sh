@@ -42,7 +42,7 @@ fi
 
 # Sync staging to development environment if @vagrant site aliases exist,
 # otherwise install Drupal.
-if [ -n "`drush sa | grep <projectStaging>.flowdemo.de`" ]
+if [ ! -n "`drush sa | grep \<projectStaging\>`" ]
   then
     PUBLIC=`drush dd @vagrant.dev:%files`
     if [ ! -e "$PUBLIC" ]; then
