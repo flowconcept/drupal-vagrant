@@ -31,14 +31,14 @@ if !File.exists?('/root/.localdev_recipe_installed')
   end
 
   # Link vagrant dir
-  #bash 'link vagrant dir' do
-  #  code <<-EOH
-  #  sudo rm -rf /var/www/
-  #  sudo ln -s /vagrant /var/www
-  #  sudo mkdir -p /var/www/private
-  #  sudo chown -R www-data:www-data /var/www
-  #  EOH
-  #end
+  bash 'link vagrant dir' do
+    code <<-EOH
+    sudo rm -rf /var/www/
+    sudo ln -s /vagrant /var/www
+    sudo mkdir -p /var/www/private
+    sudo chown -R www-data:www-data /var/www
+    EOH
+  end
 
 
   bash 'chown home' do
