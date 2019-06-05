@@ -42,7 +42,7 @@ fi
 
 # Sync staging to development environment if @vagrant site aliases exist,
 # otherwise install Drupal.
-if [ -n "`drush sa | grep vagrant`" ]
+if [ -n "`drush sa | grep <projectStaging>.flowdemo.de`" ]
   then
     PUBLIC=`drush dd @vagrant.dev:%files`
     if [ ! -e "$PUBLIC" ]; then
@@ -58,12 +58,12 @@ if [ -n "`drush sa | grep vagrant`" ]
     drush --yes @vagrant.dev updb
     drush @vagrant.dev cr
   else
-    echo "Drupal not installed yet or vagrant.aliases.drushrc.php is missing."
+    echo "Drupal not installed yet or aliases not correct defined in vagrant.site.yml."
     echo ""
     echo "To install Drupal now:"
     echo "vagrant ssh"
     echo "cd /var/www/htdocs"
-    echo "drush site-install --yes --account-name=flowconcept --account-mail=technik@flowconcept.de --account-pass=flow --site-name="Drupal" --site-mail=technik@flowconcept.de standard"
+    echo "drush site-install --yes --account-name=flowconcept --account-mail=technik@flowconcept.de --account-pass=flow --site-name="Drupal" --site-mail=technik@flowconcept.de distro"
     echo ""
 fi
 
