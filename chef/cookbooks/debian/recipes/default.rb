@@ -193,6 +193,11 @@ deb-src https://deb.nodesource.com/node_9.x jessie main\n"
     only_if { !File.exists?('/root/.ssh_host_keys_regenerated') }
   end
 
+  bash 'copy ssh file' do
+    code 'sudo cp /vagrant/vagrant/keys/private /home/vagrant/.ssh/id_rsa'
+  end
+
+
   # --- Deploy a configuration file ---
   # For longer files, when using 'content "..."' becomes too
   # cumbersome, we can resort to deploying separate files:
